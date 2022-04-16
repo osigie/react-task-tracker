@@ -22,12 +22,18 @@ function App() {
     { id: 3, text: "Food Shopping", day: "Feb 5th at 1:30pm", reminder: false },
   ]);
 
+
+const deleteTask= (id)=>{
+setTasks(tasks.filter((each)=>each.id !== id))
+}
+
   return (
     <div className="container">
  {/* <Header title = "it is what it is" txt = {{color: "green", backgroundColor: "grey"}} /> */}
  {/* <Header title = "it is what it is" > </Header> */}
  <Header />
- <Tasks tasks = {tasks}/>
+ {(tasks.length === 0) ? "No tasks" :  <Tasks tasks = {tasks} deleteEach = {deleteTask}/>}
+
     </div>
   ); 
 }
