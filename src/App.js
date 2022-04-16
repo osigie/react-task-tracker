@@ -1,7 +1,7 @@
 import Header from "./components/Header"
 import Tasks from "./components/Tasks"
 import { useState } from "react";
-
+import AddTask from "./components/AddTask"
 
 
 function App() {
@@ -22,17 +22,23 @@ function App() {
     { id: 3, text: "Food Shopping", day: "Feb 5th at 1:30pm", reminder: false },
   ]);
 
-
+//Delete Task
 const deleteTask= (id)=>{
 setTasks(tasks.filter((each)=>each.id !== id))
 }
 
+//Toggle Reminder 
+const toggleReminder= (id)=>{
+setTasks(tasks.map((each)=> each.id === id ? {...each, reminder: !each.reminder}: each))
+}
+
   return (
     <div className="container">
+      <AddTask/>
  {/* <Header title = "it is what it is" txt = {{color: "green", backgroundColor: "grey"}} /> */}
  {/* <Header title = "it is what it is" > </Header> */}
  <Header />
- {(tasks.length === 0) ? "No tasks" :  <Tasks tasks = {tasks} deleteEach = {deleteTask}/>}
+ {(tasks.length === 0) ? "No tasks" :  <Tasks tasks = {tasks} deleteEach = {deleteTask} toggled = {toggleReminder}/>}
 
     </div>
   ); 
