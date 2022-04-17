@@ -4,6 +4,7 @@ import { useState } from "react";
 import AddTask from "./components/AddTask"
 
 
+
 function App() {
 
   const [tasks, setTasks] = useState([
@@ -31,13 +32,22 @@ setTasks(tasks.filter((each)=>each.id !== id))
 const toggleReminder= (id)=>{
 setTasks(tasks.map((each)=> each.id === id ? {...each, reminder: !each.reminder}: each))
 }
+let iD = 0
+
+//Add Tasks
+const addMoreTask =(task)=>{
+  (tasks.length === 0) ? iD = 1 : iD = tasks.length + 1
+  const newTask = {...task, id:iD}
+  setTasks([...tasks, newTask])
+}
 
   return (
     <div className="container">
-      <AddTask/>
+       <Header />
+      <AddTask addMore = {addMoreTask}/>
  {/* <Header title = "it is what it is" txt = {{color: "green", backgroundColor: "grey"}} /> */}
  {/* <Header title = "it is what it is" > </Header> */}
- <Header />
+
  {(tasks.length === 0) ? "No tasks" :  <Tasks tasks = {tasks} deleteEach = {deleteTask} toggled = {toggleReminder}/>}
 
     </div>
