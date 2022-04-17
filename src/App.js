@@ -27,6 +27,12 @@ const getFromBackEnd = async ()=>{
   return data
 }
 
+const getSingleData = async (id)=>{
+  const res = await fetch(`http://localhost:4000/tasks/${id}`)
+  const data = await res.json();
+return data
+}
+
 
 //Delete Task
 const deleteTask= async (id)=>{
@@ -35,8 +41,12 @@ setTasks(tasks.filter((each)=>each.id !== id))
 }
 
 //Toggle Reminder 
-const toggleReminder= (id)=>{
-setTasks(tasks.map((each)=> each.id === id ? {...each, reminder: !each.reminder}: each))
+const toggleReminder= async (id)=>{
+const fetchData = await getSingleData(id)
+const updatedData = {...fetchData, reminder: !fetchData.reminder}
+const res = await fetch(`http://localhost:4000/tasks/${id}`, {method: 'PUT',headers: {"Content-Type": 'application/json'}, body: JSON.stringify(updatedData)})
+const data = await res.json()
+setTasks(tasks.map((each)=> each.id === id ? {...each, reminder: data.reminder}: each))
 }
 // let iD = 0
 
