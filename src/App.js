@@ -7,6 +7,8 @@ import AddTask from "./components/AddTask"
 
 function App() {
 
+  const [showTask, setShowAddTask] = useState(true)
+
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -37,14 +39,21 @@ let iD = 0
 //Add Tasks
 const addMoreTask =(task)=>{
   (tasks.length === 0) ? iD = 1 : iD = tasks.length + 1
+
   const newTask = {...task, id:iD}
   setTasks([...tasks, newTask])
+}
+//Togge Show Task
+const changedTask =()=>{
+  setShowAddTask(!showTask)
 }
 
   return (
     <div className="container">
-       <Header />
-      <AddTask addMore = {addMoreTask}/>
+       <Header clickMe ={changedTask
+      }/>
+       {showTask && <AddTask addMore = {addMoreTask}/> }
+     
  {/* <Header title = "it is what it is" txt = {{color: "green", backgroundColor: "grey"}} /> */}
  {/* <Header title = "it is what it is" > </Header> */}
 
