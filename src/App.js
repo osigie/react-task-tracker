@@ -51,8 +51,8 @@ const changedTask =()=>{
   return (
     <div className="container">
        <Header clickMe ={changedTask
-      }/>
-       {showTask && <AddTask addMore = {addMoreTask}/> }
+      } showAdd = {showTask}/>
+       {showTask && <AddTask addMore = {addMoreTask} /> }
      
  {/* <Header title = "it is what it is" txt = {{color: "green", backgroundColor: "grey"}} /> */}
  {/* <Header title = "it is what it is" > </Header> */}
