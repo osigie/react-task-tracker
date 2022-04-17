@@ -1,6 +1,6 @@
 import Header from "./components/Header"
 import Tasks from "./components/Tasks"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AddTask from "./components/AddTask"
 
 
@@ -9,12 +9,28 @@ function App() {
 
   const [showTask, setShowAddTask] = useState(true)
 
-  const [tasks, setTasks] = useState([
+  const [tasks, setTasks] = useState([]);
 
-  ]);
+  useEffect(()=>{
+const getData = async ()=>{
+const dataFromServer = await getFromBackEnd();
+setTasks(dataFromServer)
+}
+
+getData()
+  }, [])
+
+///Get data from mock server
+const getFromBackEnd = async ()=>{
+  const res = await fetch('http://localhost:4000/tasks')
+  const data = await res.json();
+  return data
+}
+
 
 //Delete Task
-const deleteTask= (id)=>{
+const deleteTask= async (id)=>{
+  await fetch(`http://localhost:4000/tasks/${id}`, {method: 'DELETE'})
 setTasks(tasks.filter((each)=>each.id !== id))
 }
 
@@ -22,14 +38,14 @@ setTasks(tasks.filter((each)=>each.id !== id))
 const toggleReminder= (id)=>{
 setTasks(tasks.map((each)=> each.id === id ? {...each, reminder: !each.reminder}: each))
 }
-let iD = 0
+// let iD = 0
 
 //Add Tasks
-const addMoreTask =(task)=>{
-  (tasks.length === 0) ? iD = 1 : iD = tasks.length + 1
-
-  const newTask = {...task, id:iD}
-  setTasks([...tasks, newTask])
+const addMoreTask = async(task)=>{
+  // (tasks.length === 0) ? iD = 1 : iD = tasks.length + 1
+const res = await fetch('http://localhost:4000/tasks', {method: 'POST', headers: {"Content-type": 'application/json'}, body: JSON.stringify(task)})
+const data = await res.json()
+setTasks([...tasks, data])
 }
 //Togge Show Task
 const changedTask =()=>{
