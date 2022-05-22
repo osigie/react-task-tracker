@@ -22,20 +22,20 @@ function App() {
 
   ///Get data from mock server
   const getFromBackEnd = async () => {
-    const res = await fetch("http://localhost:4000/tasks");
+    const res = await fetch("/tasks");
     const data = await res.json();
     return data;
   };
 
   const getSingleData = async (id) => {
-    const res = await fetch(`http://localhost:4000/tasks/${id}`);
+    const res = await fetch(`/tasks/${id}`);
     const data = await res.json();
     return data;
   };
 
   //Delete Task
   const deleteTask = async (id) => {
-    await fetch(`http://localhost:4000/tasks/${id}`, { method: "DELETE" });
+    await fetch(`/tasks/${id}`, { method: "DELETE" });
     setTasks(tasks.filter((each) => each.id !== id));
   };
 
@@ -43,7 +43,7 @@ function App() {
   const toggleReminder = async (id) => {
     const fetchData = await getSingleData(id);
     const updatedData = { ...fetchData, reminder: !fetchData.reminder };
-    const res = await fetch(`http://localhost:4000/tasks/${id}`, {
+    const res = await fetch(`/tasks/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedData),
@@ -60,7 +60,7 @@ function App() {
   //Add Tasks
   const addMoreTask = async (task) => {
     // (tasks.length === 0) ? iD = 1 : iD = tasks.length + 1
-    const res = await fetch("http://localhost:4000/tasks", {
+    const res = await fetch("/tasks", {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(task),

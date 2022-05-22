@@ -6,7 +6,6 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-// const dataConnection = require("./database");
 const db = require("./database");
 
 var indexRouter = require("./routes/index");
@@ -14,7 +13,6 @@ var indexRouter = require("./routes/index");
 var app = express();
 
 //DB CONNECT
-// dataConnection()
 db.authenticate()
   .then(() => console.log("Connection has been established successfully."))
   .catch((err) => console.error("Unable to connect to the database:", err));
